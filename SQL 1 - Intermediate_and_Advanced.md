@@ -1,5 +1,14 @@
 ## Here I am showing more complex SQL coding. This is to show that I know how to use things beyond basic SQL statements. 
 
+**Show all orders made on the last day of each month**
+```sql
+SELECT EmployeeID, OrderID, date(OrderDate) AS OrderDate
+FROM Orders
+WHERE OrderDate = Last_day(OrderDate)
+ORDER BY EmployeeID;
+```
+![image](https://user-images.githubusercontent.com/119534892/207497045-86f77d9e-4992-4cee-9f64-7fe34d6d89f7.png)
+
 
 **Which employees had late orders and what was their late order count?**
 ```sql
@@ -85,3 +94,49 @@ AND datediff(Order2.OrderDate, Order1.OrderDate) <= 5
 ORDER BY Order1.CustomerID;
 ```
 ![image](https://user-images.githubusercontent.com/119534892/207471449-438b96f0-9f31-4889-8729-3ac5d282cdd3.png)
+
+**Group customers based on how much they ordered in 2016**
+
+```sql
+With Orders2016 AS(
+SELECT c.CustomerId, c.CompanyName, sum(od.Quantity * od.UnitPrice) AS TotalOrderAmount
+FROM Customers c
+JOIN Orders o ON o.CustomerID = c.CustomerId
+JOIN OrderDetails od ON od.OrderID = o.OrderID
+WHERE o.OrderDate >= '2016-01-01' AND o.OrderDate < '2017-01-01'
+GROUP BY CustomerID, CompanyName)
+SELECT *, case
+When TotalOrderAmount >= 0 AND TotalOrderAmount < 1000 then 'Low'
+when TotalOrderAmount >= 1000 AND TotalOrderAmount < 5000 then 'Medium'
+when TotalOrderAmount >= 5000 AND TotalOrderAmount < 10000 then 'High'
+when TotalOrderAmount >= 10000 then 'Very High'
+end as CustomerGroup
+FROM Orders2016
+ORDER BY CustomerID;
+```
+![image](https://user-images.githubusercontent.com/119534892/207497944-911beb6c-6b83-48ae-8d21-11b9aff364f4.png)
+
+**Show all customer groups and the percentage in each.**
+```sql
+With Orders2016 AS(
+SELECT c.CustomerId, c.CompanyName, sum(od.Quantity * od.UnitPrice) AS TotalOrderAmount
+FROM Customers c
+JOIN Orders o ON o.CustomerID = c.CustomerId
+JOIN OrderDetails od ON od.OrderID = o.OrderID
+WHERE o.OrderDate >= '2016-01-01' AND o.OrderDate < '2017-01-01'
+GROUP BY CustomerID, CompanyName),
+CustomerGrouping AS(
+SELECT *, case
+When TotalOrderAmount >= 0 AND TotalOrderAmount < 1000 then 'Low'
+when TotalOrderAmount >= 1000 AND TotalOrderAmount < 5000 then 'Medium'
+when TotalOrderAmount >= 5000 AND TotalOrderAmount < 10000 then 'High'
+when TotalOrderAmount >= 10000 then 'Very High'
+end as CustomerGroup
+FROM Orders2016)
+SELECT CustomerGroup, count(*) AS TotalInGroup, 
+cast(count(*)/(SELECT count(*) FROM CustomerGrouping) AS Decimal (4,2)) AS PercentageInGRoup
+FROM CustomerGrouping
+GROUP BY CustomerGroup
+ORDER BY TotalInGroup DESC;
+```
+![image](https://user-images.githubusercontent.com/119534892/207498148-91adc28b-3dfa-4b4d-a227-e419b6d4a114.png)
