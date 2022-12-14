@@ -7,6 +7,9 @@
 
 ### 💡 Core Competencies 💡
 #### Tools: SQL, Tableau, Excel
-#### Skills: Data Cleaning, Data Visualisation, Data Analysis, Price Analysis, Procurement and Sourcing
+#### Skills: Data Analysis, Data Visualization, Price Analysis, Procurement and Sourcing, Reconciliation, Inventory Management
 
-###⚡️ Currently ⚡️
+### ⚡ Currently ⚡️
+#### Working as a Supply Chain Analyst
+#### Learning new skills in Excel, SQL, and Tableau weekly. 
+#### Enjoying the process of learning how to bring visual answers to questions. 
