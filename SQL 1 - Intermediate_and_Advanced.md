@@ -70,3 +70,15 @@ ORDER BY AverageFreight DESC
 LIMIT 3;
 ```
 ![image](https://user-images.githubusercontent.com/119534892/205210985-0ff24c79-5344-4a7a-9a7b-92fa517cea69.png)
+
+**Show the customers who have made more than 1 order in a 5 day period in order to reduce freight cost.**
+```sql
+SELECT Order1.CustomerID, Order1.OrderID AS InitialOrderID, date(Order1.OrderDate) AS InitialOrderDate, Order2.OrderID AS NextOrderID, 
+date(Order2.OrderDate) AS NextOrderDate, datediff(Order2.OrderDate, Order1.OrderDate) AS DaysBetweenOrders
+FROM Orders Order1
+JOIN Orders Order2 ON Order1.CustomerID = Order2.CustomerID
+WHERE Order1.OrderID < Order2.OrderID
+AND datediff(Order2.OrderDate, Order1.OrderDate) <= 5
+ORDER BY Order1.CustomerID;
+```
+![image](https://user-images.githubusercontent.com/119534892/207471449-438b96f0-9f31-4889-8729-3ac5d282cdd3.png)
