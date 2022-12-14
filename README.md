@@ -5,11 +5,11 @@
 #### 📊 Use Excel daily in my professional and personal life
 #### :computer: Taught myself SQL and Tableau
 
-### 💡 Core Competencies 💡
+### :high_brightness: Core Competencies :high_brightness:
 #### Tools: SQL, Tableau, Excel
 #### Skills: Data Analysis, Data Visualization, Price Analysis, Procurement and Sourcing, Reconciliation, Inventory Management
 
-### ⚡ Currently ⚡️
-#### Working as a Supply Chain Analyst
+### :fire: Currently :fire:
+#### Working as a Supply Chain Analyst doing both price analysis and procurement.
 #### Learning new skills in Excel, SQL, and Tableau weekly. 
 #### Enjoying the process of learning how to bring visual answers to questions. 
