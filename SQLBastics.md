@@ -1,3 +1,6 @@
+## Here I am showing a few basic coding examples in SQL. These are not complex. They are to show understanding of basic knowledge of using SQL in order to answer simple questions with the data. 
+
+
 **Show all order details**
 ```sql
 SELECT * FROM OrderDetails
