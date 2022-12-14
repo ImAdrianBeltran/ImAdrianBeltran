@@ -1,6 +1,6 @@
 ## Hi there, I'm Adrian :wave:
 
-### ✨ About Me in 30 Secs ✨
+### About Me:
 #### 👩🏻‍💻 Accouting graduate with over 5 years of supply chain management experience
 #### 📊 Use Excel daily in my professional and personal life
 #### :computer: Taught myself SQL and Tableau
