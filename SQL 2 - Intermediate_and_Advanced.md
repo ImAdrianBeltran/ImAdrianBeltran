@@ -67,3 +67,64 @@ GROUP BY p.ProductID , h.OrderDate
 ORDER BY p.ProductID;
 ```
 ![image](https://user-images.githubusercontent.com/119534892/208216024-a51886d3-056e-4625-9ceb-ce10f70b3d74.png)
+
+### How many cost changes do products generally have? ###
+```sql
+WITH MAIN AS(
+SELECT ProductID, count(StartDate) AS TotalPriceChanges
+FROM ProductCostHistory
+GROUP BY ProductID)
+SELECT TotalPriceChanges, count(*) AS TotalProducts
+FROM Main
+GROUP BY TotalPriceChanges
+ORDER BY TotalPriceChanges;
+```
+![image](https://user-images.githubusercontent.com/119534892/208217062-e190edda-48b6-4b5c-b433-03ceb0f24a44.png)
+
+### Show the size and base ProductNumber for products whose product ID is greater than 533 ###
+```sql
+WITH Main AS(
+SELECT ProductId, ProductNumber, locate('-', ProductNumber) AS HyphenLocation
+FROM Product
+WHERE ProductID > 533)
+SELECT *, case
+when HyphenLocation = 0 then ProductNumber
+else substring(ProductNumber, 1, HyphenLocation -1) end AS BaseProductNumber
+, case
+when HyphenLocation = 0 then Null
+else substring(ProductNumber, HyphenLocation +1, 2) end AS Size
+FROM Main
+ORDER BY PRoductID;
+```
+![image](https://user-images.githubusercontent.com/119534892/208217148-5964dae0-173a-46a5-8745-4c73db74a3ad.png)
+
+### What's the running total of order in the last year ###
+```sql
+WITH Main AS(
+SELECT c.CalendarMonth, count(h.SalesOrderID) AS TotalOrders
+FROM Calendar c
+JOIN SalesOrderHeader h ON c.CalendarDate = date(h.OrderDate)
+WHERE h.OrderDate >=
+date_add((SELECT max(OrderDate) FROm SalesOrderHeader), interval -1 year)
+GROUP BY c.CalendarMonth)
+SELECT CalendarMonth, TotalOrders, SUM(TotalOrders) OVER(ORDER BY CalendarMonth) AS RunningTotal
+FROM Main
+GROUP BY CalendarMonth
+ORDER BY CalendarMonth;
+```
+![image](https://user-images.githubusercontent.com/119534892/208217282-681207ea-04f7-401f-b092-693f6bce4ce3.png)
+
+### What is the total late order count by territory? ###
+```sql
+WITH Main AS(
+SELECT SalesOrderID, TerritoryID, date(DueDate) AS DueDate, date(ShipDate) AS ShipDate, case
+when DueDate < ShipDate then 1 else 0 end AS OrderArrivedLAte
+FROM SalesOrderHeader)
+SELECT t.TerritoryID, t.TerritoryName, t.CountryCode, count(Main.SalesOrderID) AS TotalOrders, Ifnull(sum(Main.OrderArrivedLate),0) AS TotalLateOrders
+FROM SalesTerritory t
+JOIN MAin ON Main.TerritoryID = t.TerritoryID
+GROUP BY TerritoryID
+ORDER BY TerritoryID;
+```
+![image](https://user-images.githubusercontent.com/119534892/208217339-2f7f09c6-f4d6-49c7-aa42-04bc8f0ea081.png)
+
