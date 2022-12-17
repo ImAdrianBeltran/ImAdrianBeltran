@@ -52,3 +52,18 @@ GROUP BY p.ProductID
 ORDER BY p.ProductID;
 ```
 ![image](https://user-images.githubusercontent.com/119534892/208214754-e26336bd-195d-4a56-acf5-34a262460b60.png)
+
+### Show all products that were ordered before the sell start date of after the sell end date ###
+```sql
+SELECT p.ProductID, date(h.OrderDate) AS OrderDate, d.OrderQty AS Qty, date(p.SellStartDate) AS SellStartDate, date(p.SellEndDate) AS SellEndDate, case
+when h.OrderDate < p.SellStartDate then 'Sold Before Start Date'
+when h.OrderDate > p.SellEndDate then 'Sold After End Date'
+end AS ProblemType
+FROM Product p
+JOIN SalesOrderDetail d ON p.ProductID = d.ProductID
+JOIN SalesOrderHeader h ON d.SalesOrderID = h.SalesOrderID
+WHERE OrderDate NOT BETWEEN p.SellStartDate AND ifnull(p.SellEndDate, h.OrderDate)
+GROUP BY p.ProductID , h.OrderDate
+ORDER BY p.ProductID;
+```
+![image](https://user-images.githubusercontent.com/119534892/208216024-a51886d3-056e-4625-9ceb-ce10f70b3d74.png)
