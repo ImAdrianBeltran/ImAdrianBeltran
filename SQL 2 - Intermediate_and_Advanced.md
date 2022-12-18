@@ -1,3 +1,5 @@
+## Here I am showing more intermediate and advanced examples of SQL ##
+
 ### Show what the products cost on 2014-04-15 ###
 ```sql
 SELECT ProductID, StandardCost
