@@ -6,10 +6,7 @@
 
 ### :boom: About me :boom:
 #### :school: Accounting graduate with years of experience working in supply chain management
+#### :office: Currently working as a Supply Chain Analyst
 #### :bar_chart: Self-taught in SQL and Tableau
 #### :computer: Use Excel daily in both my work and personal life
-
-### :low_brightness: Currently :low_brightness:
-#### :office: Working as a Supply Chain Analyst
-#### :bar_chart: Learning new things in Excel, SQL, and Tableau weekly
 #### :chart_with_upwards_trend: Looking for more opportunities to learn and grow in my professional life
